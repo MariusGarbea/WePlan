@@ -1,0 +1,30 @@
+{
+  "name": "weplan",
+  "version": "1.0.0",
+  "description": "A consensus-driven, weather-based event planning app using blockchain technology.",
+  "main": "server.js",
+  "scripts": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MariusGarbea/WePlan.git"
+  },
+  "keywords": [
+    "weather",
+    "blockchain",
+    "event-planning",
+    "hackathon",
+    "consensus",
+    "voting"
+  ],
+  "author": "Marius Garbea, Nick DeFilippis, Marc Ivan, Isiah Seigl",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/MariusGarbea/WePlan/issues"
+  },
+  "homepage": "https://github.com/MariusGarbea/WePlan#readme",
+  "dependencies": {
+    "express": "^4.16.2"
+  }
+}
