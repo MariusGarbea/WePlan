@@ -15,7 +15,6 @@ class Submit extends Component {
     endDate: '',
     duration: '',
     unit: '',
-    emails: '',
     result: '',
   }
   handleChange = event => {
@@ -138,10 +137,6 @@ class Submit extends Component {
               <input placeholder="Number" type="number" name="duration" value={this.state.duration} onChange={this.handleChange} />
               <br />
               <select onChange={this.handleChange} name="unit">{unitOptions}</select>
-            </label>
-            <label>
-              <p>Emails: </p>
-              <textarea placeholder="Invitees" type="textarea" name="emails" value={this.state.emails} onChange={this.handleChange} />
             </label>
             <br />
             <button className="btn" onClick={this.handleSubmit}>Plan!</button>

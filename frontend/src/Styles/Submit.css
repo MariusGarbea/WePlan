@@ -17,12 +17,6 @@
   display: inline-block;
 }
 
-textarea {
-  width: 200px;
-  height: 100px;
-  resize: none;
-}
-
 input {
   width: 200px;
   height: 20px;
