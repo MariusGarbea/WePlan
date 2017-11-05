@@ -3,15 +3,71 @@ const forecastParse = require('./forecast')
 
 var future = new Date()
 future.setDate(7)
-findForecastIntervals({"start": new Date(), "end": future, "duration": 1000*60*60*4, "weather": ["Sunny", "Clear", "Mostly sunny", "Partly cloudy"]}, "311315").then(function(done, err){
+findForecastIntervals({"start": new Date(), "end": future, "duration": 1000*60*60*4, "weather": "Sunny"}, "311315").then(function(done, err){
   console.log(done)
 })
 
 async function findForecastIntervals(eventQuery, locationKey){
+  weatherTypes = {
+     'Sunny':[
+        'Sunny',
+        'Mostly sunny',
+        'Partly sunny',
+        'Intermittent clouds',
+        'Hazy sunshine',
+        'Clear',
+        'Mostly clear'
+     ],
+     'Cloudy':[
+        'Cloudy',
+        'Mostly cloudy',
+        'Dreary (Overcast)',
+        'Fog',
+        'Partly cloudy'
+     ],
+     'Rain':[
+        'Rain',
+        'Showers',
+        'Mostly cloudy w/ showers',
+        'Partly sunny w/ showers',
+        'T-storms',
+        'Mostly cloudy w/ T-Storms',
+        'Partly sunny w/ T-Storms',
+        'Partly cloudy w/ showers',
+        'Mostly cloudy w/ showers',
+        'Partly cloudy w/ T-storms',
+        'Mostly cloudy w/ T-Storms',
+        'Intermittent Clouds',
+        'Hazy moonlight',
+        'Mostly cloudy'
+     ],
+     'Snow':[
+        'Snow',
+        'Flurries',
+        'Mostly cloudy w/ flurries',
+        'Mostly cloudy w/ snow',
+        'Ice',
+        'Sleet',
+        'Freezing rain',
+        'Rain and snow',
+        'Mostly cloudy w/ flurries',
+        'Mostly cloudy w/ snow'
+     ],
+     'Hot':[
+        'Hot'
+     ],
+     'Cold':[
+        'Cold'
+     ],
+     'Windy':[
+        'Windy'
+     ],
+  }
   start = eventQuery.start
   end = eventQuery.end
   duration = eventQuery.duration
-  requirements = eventQuery.weather
+  requirements = weatherTypes[eventQuery.weather]
+  console.log(requirements)
 
   let forecasts = await weather.getForecastFor(locationKey, start, end)
   if(forecasts.type == "none"){
