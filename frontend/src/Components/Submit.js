@@ -99,7 +99,7 @@ class Submit extends Component {
       return (
         <option value={data} key={i}>{data}</option>
       )
-    }
+    });
     let open = this.state.result.url && this.state.result.url.length !== 0;
     return (
       <div>

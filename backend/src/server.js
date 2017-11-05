@@ -42,9 +42,10 @@ app.post('/create-event', async function (req, res) {
   await db.createEvent(req.body, url)
   res.send({"url": url, "intervals": intervals})
 })
-app.get('/event-details/{url}', async function(req, res) {
-  //await db.findEvent(url)
-  res.send()
+app.get('/event-details/:url', async function(req, res) {
+  console.log(req.params.url)
+  let doc = await db.getEventByURL(req.params.url)
+  res.send(doc)
 })
 // you got this, dont give up u r the bestest
 app.listen(6942, () => console.log('App listening on port 3000.'))

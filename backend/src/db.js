@@ -1,5 +1,7 @@
 const mongoose = require('mongoose')
 
+mongoose.Promise = Promise
+
 const connectionString = 'mongodb://127.0.0.1:27017/MyDb'
 mongoose.connect(connectionString, {
   useMongoClient: true
@@ -51,12 +53,13 @@ async function createEvent (eventQuery, hashurl) {
     console.log(event)
     console.log("Event Stored!")
   })
-
-  //await event.save()
+  await event.save()
 }
 
-function getEventByURL(URL){
-
+async function getEventByURL(URL){
+  let baseURL = "http://localhost:3000/Vote/"+URL
+  let document = await EventModel.findOne({'url' : baseURL}, 'name type venue duration intervals startDate endDate duration')
+  return document;
 }
 
 module.exports = {createEvent, getEventByURL}
