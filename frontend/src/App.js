@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { Route } from 'react-router';
-import './App.css';
 
 import Submit from './Components/Submit';
 import Vote from './Components/Vote';

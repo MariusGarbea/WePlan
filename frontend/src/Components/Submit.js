@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import Modal from 'react-modal';
-import '../App.css';
+import '../Styles/Submit.css';
 
 import Header from './Header';
 
@@ -139,7 +139,7 @@ class Submit extends Component {
               <textarea placeholder="Invitees" type="textarea" name="emails" value={this.state.emails} onChange={this.handleChange} />
             </label>
             <br />
-            <button className="btn" onClick={this.handleSubmit}> Plan! </button>
+            <button className="btn" onClick={this.handleSubmit}>Plan!</button>
           </div>
           <div className="col col-2" >
             {activitiesOptions}
