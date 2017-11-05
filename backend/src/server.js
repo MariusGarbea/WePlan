@@ -1,6 +1,8 @@
 const express = require('express')
 const db = require('./db')
 const weather = require('./weather')
+const findInterval = require('./findInterval')
+const duration = require('./util')
 const hashwords = require('hashwords')
 
 const hw = hashwords()
@@ -17,6 +19,13 @@ app.get('/location-key', async function (req, res) {
 app.post('/create-event', async function (req, res) {
   console.log("Creating Event...")
   console.log(req.query)
+  locationCode = "311351"//weather.getLocation()
+  intervals = await findIntervals({
+    "start": req.query.startDate,
+    "end": req.query.endDate,
+    "duration": util.convertDuration(req.query.duration)
+    "weather": req.query.weather
+  })
   url = hw.random()
   //await db.createEvent(req.body, url)
   res.send(url)
