@@ -1,8 +1,9 @@
 .box {
-  width: 100px;
+  width: 500px;
   height: 100px;
   background-color: #DC2FFF;
-  margin: 5vw;
+  margin-top: 1vw;
+  margin-bottom: 1vw;
   color: #FFF;
   display: flex;
   justify-content: center;
@@ -12,6 +13,7 @@
 
 .btn {
   margin-top: 5vh;
+  margin-bottom: 5vh;
   width: 200px;
   border-radius: 10px;
 	padding: 15px 25px;

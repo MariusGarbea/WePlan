@@ -106,7 +106,19 @@ async function findForecastIntervals(eventQuery, locationKey){
       intervals.push({"start": beginInterval, "end": end})
     }
   }
-  return {"type": forecasts.type, "intervals": intervals}
+  chunks = chunkIntervals(intervals, forecast.type, duration)
+  return {"type": forecasts.type, "intervals": chunks}
+}
+
+function chunkIntervals(intervals, type, length){
+  chunks = [];
+  increment = 1000 * 60 * 60 * (type == "daily" ? 24 : 1)
+  for(var i = 0; i < intervals.length; i++){
+    for(var j = intervals[i].start.getTime(); j <= intervals[i].end.getTime()-length; j += increment){
+      chunks.push({"start": new Date(j), "end": new Date(j+length)})
+    }
+  }
+  return chunks;
 }
 
 function meetsRequirements(requirements, forecast, type){

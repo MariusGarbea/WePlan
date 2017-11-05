@@ -8,11 +8,12 @@ var previous;
 
 class Vote extends Component {
   state = {
-    result: ['shit', 'sucker', 'cock', 'dick'],
+    result: {intervals: {intervals: []}},
     selection: '',
     submit: false
   }
   componentDidMount() {
+    console.log(`http://localhost:6942/event-details/${this.props.match.params[0]}`)
     fetch(`http://localhost:6942/event-details/${this.props.match.params[0]}`)
     .then(response => response.json())
     .then(result => this.setState({result}));
@@ -30,13 +31,16 @@ class Vote extends Component {
     previous = event.target.id;
   }
   render() {
-    const options = this.state.result.map((data, i) => {
-      return (
-        <div className="box" onClick={this.selectTime} key={i} id={i}>
-          {data}
-        </div>
-      )
-    })
+    console.log(this.state.result)
+      const options = this.state.result.intervals.intervals.map((data, i) => {
+        return (
+          <div className="box" onClick={this.selectTime} key={i} id={i}>
+            {new Date(data.start).toLocaleString()}<br></br>
+            {new Date(data.end).toLocaleString()}
+          </div>
+        )
+      })
+
     return (
       <div>
         <Modal isOpen={this.state.submit}>
@@ -45,7 +49,7 @@ class Vote extends Component {
         </Modal>
         <Header />
         <div className="center">
-          {this.state.result.length !== 0 ? options : <p>Loading...</p>}
+          {this.state.result ? options : <p>Loading...</p>}
           <br />
           <button onClick={this.handleSubmit} className="btn">Vote!</button>
         </div>
