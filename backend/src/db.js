@@ -37,7 +37,27 @@ var Event = new Schema({
   votes: [Vote]
 })
 
+var Block = new Schema({
+  eventID: String,
+  timestamp: Date,
+  votes: [Vote]
+})
+
 var EventModel = mongoose.model('Event', Event)
+var BlockModel = mongoose.model('Block', Block)
+
+async function pushBlock(eventID, votes) {
+  var block = new BlockModel({
+    eventID: eventID,
+    votes: votes,
+    timestamp: new Date()
+  })
+  return await block.save()
+}
+
+async function getAllBlocks() {
+  return await BlockModel.find({})
+}
 
 async function createEvent (eventQuery, hashurl) {
   var event = new EventModel({
@@ -76,4 +96,4 @@ async function updateEvent(event, vote){
   return await EventModel.findByIdAndUpdate(event._id, {"$push": {"votes": vote}})
 }
 
-module.exports = {createEvent, getEventByURL, updateEvent}
+module.exports = {createEvent, getEventByURL, updateEvent, getAllBlocks, pushBlock}
