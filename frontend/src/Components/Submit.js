@@ -26,7 +26,7 @@ class Submit extends Component {
     }).then(response => {
       return response.json();
     }).then(result => {
-      console.log(result);
+      alert(`Give this link to your friends: ${result}`);
     })
   }
   selectCheckBox = event => {
@@ -73,7 +73,7 @@ class Submit extends Component {
       {"activity": "Kite Flying", "id": 9},
       {"activity": "Outdoor Activity", "id": 29}
     ]
-    const weather = ['Select weather','Sunny','Mostly Sunny','Partly Sunny','Intermittent Clouds','Hazy Sunshine','Mostly Cloudy','Cloudy','Dreary (Overcast)','Fog','Showers','Mostly Cloudy w/ Showers','Partly Sunny w/ Showers','T-Storms','Mostly Cloudy w/ T-Storms','Partly Sunny w/ T-Storms','Rain','Flurries','Mostly Cloudy w/ Flurries','Snow','Mostly Cloudy w/ Snow','Ice','Sleet','Freezing Rain','Rain and Snow','Hot','Cold','Windy','Clear','Mostly Clear','Partly Cloudy','Intermittent Clouds','Hazy Moonlight','Mostly Cloudy','Partly Cloudy w/ Showers','Mostly Cloudy w/ Showers','Partly Cloudy w/ T-storms','Mostly Cloudy w/ T-Storms','Mostly Cloudy w/ Flurries','Mostly Cloudy w/ Snow'];
+    const weather = ['Select weather','Sunny','Cloudy','Storms','Rain','Snow','Hot','Cold','Windy','Clear'];
     const units = ['Select unit','Days','Hours','Minutes'];
     const activitiesOptions = activities.map((data, i) => {
       return (

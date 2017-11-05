@@ -10,7 +10,7 @@ class App extends Component {
     return (
       <main>
         <Route path="/" exact component={Submit} />
-        <Route path="/vote" component={Vote} />
+        <Route path="/vote/*" component={Vote} />
       </main>
     );
   }
