@@ -1,7 +1,9 @@
 const express = require('express')
 const db = require('./db')
 const weather = require('./weather')
+const hashwords = require('hashwords')
 
+const hw = hashwords()
 const app = express()
 
 app.get('/location-key', async function (req, res) {
@@ -13,7 +15,11 @@ app.get('/location-key', async function (req, res) {
 })
 
 app.post('/create-event', (req, res) => {
-  db.createEvent(req)
+
+
+  url = hw.random()
+  db.createEvent(req.body, url)
+  res.send(url)
 })
 // you got this, dont give up u r the bestest
-app.listen(3000, () => console.log('App listening on port 3000.'))
+app.listen(6942, '0.0.0.0', () => console.log('App listening on port 3000.'))

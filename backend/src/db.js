@@ -7,12 +7,13 @@ mongoose.connect(connectionString, {
 
 const db = mongoose.connection
 db.on('error', console.error.bind(console, 'MongoDB connection error:'))
-/*
+
 const Schema = mongoose.Schema
 const ObjectId = Schema.ObjectId
 
 var Event = new Schema({
-  id: ObjectId,
+  _id: ObjectId,
+  url: String,
   name: String,
   type: String,
   location: String,
@@ -21,15 +22,21 @@ var Event = new Schema({
 })
 
 var EventModel = mongoose.model('Event', Event)
-*/
-function createEvent (req) {
-  console.log('Event Created')
-  /*
+
+function createEvent (eventQuery, url) {
   var event = new EventModel()
   for (const prop in event) {
-    event[prop] = req[prop]
+    event[prop] = eventQuery[prop]
   }
-  */
+  event[url] = url;
+  event.save(function(err){
+    if(err){
+      console.log(err)
+    }
+    else{
+      console.log("Event stored")
+    }
+  })
 }
 
 module.exports = {createEvent}
