@@ -7,7 +7,7 @@ class App extends Component {
     name: '',
     type: '',
     venue: '',
-    activity: '',
+    activity: [],
     weather: '',
     startDate: '',
     endDate: '',
@@ -18,8 +18,20 @@ class App extends Component {
     this.setState({[event.target.name]: event.target.value});
   }
   handleSubmit = event => {
-    //send(this.state);
-    console.log(this.state)
+    fetch('104.38.184.37:6942', {
+      method: "POST",
+      body: this.state
+    }).then(response => {
+      return response.json();
+    }).then(result => {
+      console.log(result);
+    })
+  }
+  selectCheckBox = event => {
+    if(event.target.checked) {
+      this.state.activity.push(event.target.value);
+    }
+    // DON'T UNSELECT A CHECKBOX!
   }
   render() {
     const activities = ['Flight Delays','Indoor Activity','Running','Jogging','Hiking','Bicycling','Golf Weather','Tennis','Skateboarding','Outdoor Concert','Kite Flying','Beach & Pool','Sailing','Stargzing','Fishing','Construction','Ski Weather','Healthy Heart Fitness','Hunting','Outdoor Barbeque','Lawn Mowing','Outdoor Activity'];
@@ -27,7 +39,7 @@ class App extends Component {
     const activitiesOptions = activities.map((data, i) => {
       return (
         <label key={i}>
-          <input type="checkbox" value={data} onChange={this.handleChange} />
+          <input type="checkbox" value={data} onChange={this.selectCheckBox} />
           <p className="inline">{data}</p>
           <br />
         </label>
@@ -66,11 +78,11 @@ class App extends Component {
             </label>
             <label>
               <p>Start date: </p>
-              <input type="text" name="startDate" value={this.state.startDate} onChange={this.handleChange} />
+              <input type="date" name="startDate" value={this.state.startDate} onChange={this.handleChange} />
             </label>
             <label>
               <p>End date: </p>
-              <input type="text" name="endDate" value={this.state.endDate} onChange={this.handleChange} />
+              <input type="date" name="endDate" value={this.state.endDate} onChange={this.handleChange} />
             </label>
             <label>
               <p>Duration: </p>
@@ -81,7 +93,7 @@ class App extends Component {
               <textarea type="textarea" name="emails" value={this.state.emails} onChange={this.handleChange} />
             </label>
             <br />
-            <button value="Plan!" className="btn" onClick={this.handleSubmit} />
+            <button className="btn" onClick={this.handleSubmit}> Plan! </button>
           </div>
           <div className="col-2">
             {activitiesOptions}
