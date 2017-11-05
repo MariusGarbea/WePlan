@@ -1,7 +1,13 @@
-var weather = require('./weather')
-var forecastParse = require('./forecast')
+const weather = require('./weather')
+const forecastParse = require('./forecast')
 
-async function findForecastsIntervals(eventQuery, locationKey){
+var future = new Date()
+future.setDate(7)
+findForecastIntervals({"start": new Date(), "end": future, "duration": 1000*60*60*4, "weather": ["Sunny", "Clear", "Mostly sunny", "Partly cloudy"]}, "311315").then(function(done, err){
+  console.log(done)
+})
+
+async function findForecastIntervals(eventQuery, locationKey){
   start = eventQuery.start
   end = eventQuery.end
   duration = eventQuery.duration
@@ -9,7 +15,7 @@ async function findForecastsIntervals(eventQuery, locationKey){
 
   let forecasts = await weather.getForecastFor(locationKey, start, end)
   if(forecasts.type == "none"){
-    return {type: forecasts.type, [{"start": start, "end": end}]}
+    return {type: forecasts.type, intervals: [{"start": start, "end": end}]}
   }
   let intervals = []
   let date = start
@@ -17,34 +23,40 @@ async function findForecastsIntervals(eventQuery, locationKey){
   let foundStart = true
   let beginInterval = start
   let endInterval = start
-  while (forecastIndex < forecasts.length && date <= end){
-    forecast = forecasts[forecastIndex]
-    if(meetsRequirements(requirements, forecast)){
+
+  while (forecastIndex < forecasts.data.length && date <= end){
+    forecast = forecasts.data[forecastIndex]
+    date = forecastParse.getDate(forecasts.type, forecast)
+    if(meetsRequirements(requirements, forecast, forecasts.type)){
       if(!foundStart){
-        beginInterval = forecastParse(forecast).getDate()
-        endInterval = forecastParse(forecast).getDate()
+        beginInterval = date
+        endInterval = date
         foundStart = true
       }
-      else if(forecastParse(forecast).getDate() > endInterval){
-        endInterval = forecastParse(forecast).getDate()
+      else if(date > endInterval){
+        endInterval = date
       }
     }
     else{
-      if(endInterval - startInterval > duration){
-        intervals.push({"start": startInterval, "end": endInterval})
+      if(endInterval - beginInterval >= duration){
+        intervals.push({"start": beginInterval, "end": endInterval})
       }
+      beginInterval = date
       foundStart = false
     }
     forecastIndex++
   }
   if(foundStart){
-    if(end - startInterval > duration){
-      intervals.push({"start": startInterval, "end": endInterval})
+    if(end - beginInterval >= duration){
+      intervals.push({"start": beginInterval, "end": end})
     }
   }
-  return intervals
+  return {"type": forecasts.type, "intervals": intervals}
 }
 
-function meetsRequirements(requirements, forecast){
-  return requirements.contains(forecastParse(forecast).getWeather())
+function meetsRequirements(requirements, forecast, type){
+  let meets = requirements.includes(forecastParse.getWeather(type, forecast))
+  return meets
 }
+
+module.exports = {findForecastIntervals}

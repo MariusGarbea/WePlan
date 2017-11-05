@@ -74,7 +74,7 @@ function getForecastRoute(startDate, endDate){
   }
 }
 
-async function getWeatherFor(locationKey, start, end){
+async function getForecastFor(locationKey, start, end){
   let routeData = getForecastRoute(start, end)
   if(routeData == -1){
     return {"type": "none", "data": []}
@@ -96,4 +96,4 @@ async function getWeatherFor(locationKey, start, end){
   return {"type": forecastType, "data": finalResults}
 }
 
-module.exports = {getLocation: getLocationKey, getWeatherFor: getWeatherFor}
+module.exports = {getLocation: getLocationKey, getForecastFor: getForecastFor}

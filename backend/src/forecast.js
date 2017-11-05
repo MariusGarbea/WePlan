@@ -15,3 +15,5 @@ function getWeather(type, forecast){
     return forecast.Day.IconPhrase
   }
 }
+
+module.exports = {getDate, getWeather}
