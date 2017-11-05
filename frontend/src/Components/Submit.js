@@ -80,7 +80,7 @@ class Submit extends Component {
     ]
     const weather = ['Select weather','Sunny','Cloudy','Storms','Rain','Snow','Hot','Cold','Windy','Clear'];
     const units = ['Select unit','Days','Hours','Minutes'];
-    const activitiesOptions = activities.map((data, i) => {
+    /*const activitiesOptions = activities.map((data, i) => {
       return (
         <label key={i}>
           <input type="checkbox" value={data.id} onChange={this.selectCheckBox} />
@@ -88,7 +88,7 @@ class Submit extends Component {
           <br />
         </label>
       )
-    });
+    });*/
     const weatherOptions = weather.map((data, i) => {
       return (
         <option value={data} key={i}>{data}</option>
@@ -140,9 +140,6 @@ class Submit extends Component {
             </label>
             <br />
             <button className="btn" onClick={this.handleSubmit}>Plan!</button>
-          </div>
-          <div className="col col-2" >
-            {activitiesOptions}
           </div>
         </div>
       </div>

@@ -4,7 +4,10 @@ body {
 }
 
 .logo {
-  height: 80px;
+  height: 100px;
+  display: inline-block;
+  margin-right: 10px;
+  padding-bottom: 10px;
 }
 
 .header {
@@ -16,5 +19,7 @@ body {
 }
 
 .title {
-  font-size: 1.5em;
+  font-size: 4em;
+  display: inline-block;
+  padding-top: -100px;
 }

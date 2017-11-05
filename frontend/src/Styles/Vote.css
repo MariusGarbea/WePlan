@@ -11,6 +11,10 @@
   cursor: pointer;
 }
 
+.box:hover{
+  background-color: #dc2f55;
+}
+
 .btn {
   margin-top: 5vh;
   margin-bottom: 5vh;
