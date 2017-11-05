@@ -7,22 +7,40 @@ class App extends Component {
     name: '',
     type: '',
     venue: '',
-    activity: '',
+    activity: [],
+    weather: '',
     startDate: '',
     endDate: ''
   }
   handleChange = event => {
     this.setState({[event.target.name]: event.target.value});
   }
+  handleSubmit = () => {
+
+  }
   render() {
-    const activities = ['Beach & Pool', 'Bicycling', 'Fishing', 'Hiking'];
+    const activities = ['Flight Delays','Indoor Activity','Running','Jogging','Hiking','Bicycling','Golf Weather','Tennis','Skateboarding','Outdoor Concert','Kite Flying','Beach & Pool','Sailing','Stargzing','Fishing','Construction','Ski Weather','Healthy Heart Fitness','Hunting','Outdoor Barbeque','Lawn Mowing','Outdoor Activity'];
+    const weather = ['Shit','Sucker'];
+    const activitiesOptions = activities.map((data, i) => {
+      return (
+        <label key={i}>
+          <p>{data}</p>
+          <input type="checkbox" value={data} />
+        </label>
+      )
+    });
+    const weatherOptions = weather.map((data, i) => {
+      return (
+        <option value={data} key={i}>{data}</option>
+      )
+    });
     return (
       <div>
         <header className="header">
           <img src={logo} className="logo" alt="logo" />
           <h1 className="title">WePlan</h1>
         </header>
-        <form className="formBody">
+        <form className="formBody" onSubmit={this.handleSubmit}>
           <label>
             <p>Event name: </p>
             <input type="text" name="name" value={this.state.name} onChange={this.handleChange} />
@@ -36,8 +54,12 @@ class App extends Component {
             <input type="text" name="venue" value={this.state.venue} onChange={this.handleChange} />
           </label>
           <label>
-            <p>Activity: </p>
-            <input type="text" name="activity" value={this.state.activity} onChange={this.handleChange} />
+            <p>Activities: </p>
+            {activitiesOptions}
+          </label>
+          <label>
+            <p>Desired weather: </p>
+            <select>{weatherOptions}</select>
           </label>
           <label>
             <p>Start date: </p>
