@@ -16,7 +16,7 @@ class Submit extends Component {
     duration: '',
     unit: '',
     emails: '',
-    result: ''
+    result: '',
   }
   handleChange = event => {
     this.setState({[event.target.name]: event.target.value});
@@ -127,11 +127,11 @@ class Submit extends Component {
             </label>
             <label>
               <p>Start date: </p>
-              <input type="date" name="startDate" value={this.state.startDate} onChange={this.handleChange} />
+              <input type="datetime-local" name="startDate" value={this.state.startDate} onChange={this.handleChange} />
             </label>
             <label>
               <p>End date: </p>
-              <input type="date" name="endDate" value={this.state.endDate} onChange={this.handleChange} />
+              <input type="datetime-local" name="endDate" value={this.state.endDate} onChange={this.handleChange} />
             </label>
             <label>
               <p>Duration: </p>
