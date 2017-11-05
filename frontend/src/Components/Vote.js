@@ -24,7 +24,7 @@ class Vote extends Component {
     fetch(`http://localhost:6942/event-details/${this.props.match.params[0]}`)
     .then(response => response.json())
     .then(result => this.setState({result}));
-    call = setInterval(this.check, 120000);
+    call = setInterval(this.check, 120);
   }
   handleSubmit = () => {
     this.setState({submit: true})
