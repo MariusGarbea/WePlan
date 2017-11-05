@@ -19,6 +19,7 @@ class Submit extends Component {
     this.setState({[event.target.name]: event.target.value});
   }
   handleSubmit = event => {
+    console.log(this.state.activity)
     fetch('http://localhost:6942/create-event', {
       method: "POST",
       body: this.state
@@ -29,10 +30,14 @@ class Submit extends Component {
     })
   }
   selectCheckBox = event => {
+    let activity = this.state.activity;
     if(event.target.checked) {
-      this.state.activity.push(event.target.value);
+      activity.push(event.target.value);
+    } else {
+      if(activity.indexOf(event.target.value) !== -1) {
+        activity.splice(activity.indexOf(event.target.value), 1);
+      }
     }
-    // DON'T UNSELECT A CHECKBOX!
   }
   render() {
     const activities = [
