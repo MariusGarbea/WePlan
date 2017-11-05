@@ -32,7 +32,7 @@ class Submit extends Component {
     }).then(response => {
       return response.json();
     }).then(result => {
-      this.setState({result});
+      this.setState({result: result});
     })
   }
   selectCheckBox = event => {
@@ -99,11 +99,12 @@ class Submit extends Component {
       return (
         <option value={data} key={i}>{data}</option>
       )
-    });
+    }
+    let open = this.state.result.url && this.state.result.url.length !== 0;
     return (
       <div>
-        <Modal isOpen={this.state.result.length !== 0}>
-          <h1>Send this link {this.state.result}</h1>
+        <Modal isOpen={open}>
+          <h1>Send this link {this.state.result.url}</h1>
         </Modal>
         <Header />
         <div className="flexView">
