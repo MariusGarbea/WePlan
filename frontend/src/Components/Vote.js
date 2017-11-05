@@ -10,6 +10,7 @@ class Vote extends Component {
   state = {
     result: {intervals: {intervals: []}},
     selection: '',
+    selectionID: -1,
     submit: false
   }
   componentDidMount() {
@@ -20,13 +21,32 @@ class Vote extends Component {
   }
   handleSubmit = () => {
     this.setState({submit: true})
+    fetch('http://localhost:6942/vote', {
+      headers: {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json'
+    },
+      method: 'POST',
+      body: JSON.stringify({
+        eventID: this.props.match.params[0],
+        selection: this.state.selection,
+        selectionID: this.state.selectionID
+      })
+    }).then((done, err) => {
+      if(err){
+        console.log(err)
+      }
+      else{
+        console.log(done)
+      }
+    })
   }
   selectTime = event => {
     console.log(event.target.id)
     if(previous) {
       document.getElementById(previous).style.backgroundColor = "#DC2FFF";
     }
-    this.setState({selection: event.target.innerHTML.replace("<br>", " - ")});
+    this.setState({selection: event.target.innerHTML.replace("<br>", " - "), selectionID: event.target.id});
     document.getElementById(event.target.id).style.backgroundColor = "#DC2685";
     previous = event.target.id;
   }

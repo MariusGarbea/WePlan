@@ -38,6 +38,21 @@ app.post('/create-event', async function (req, res) {
   await db.createEvent(req.body, url)
   res.send({"url": url, "intervals": intervals})
 })
+
+app.post('/vote', async function(req, res) {
+  if(req.body.selectionID == -1){
+    res.send(403)
+  }
+  console.log(req.body)
+  let document = await db.getEventByURL(req.body.eventID)
+  await db.updateEvent(document, {
+    timestamp: new Date(),
+    vote: req.body.selection,
+    voteIndex: req.body.selectionID
+  })
+  res.sendStatus(200)
+})
+
 app.get('/event-details/:url', async function(req, res) {
   console.log(req.params.url)
   let doc = await db.getEventByURL(req.params.url)

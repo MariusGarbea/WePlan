@@ -14,6 +14,12 @@ db.on('error', console.error.bind(console, 'MongoDB connection error:'))
 const Schema = mongoose.Schema
 const ObjectId = Schema.ObjectId
 
+var Vote = new Schema({
+  voteIndex: Number,
+  vote: String,
+  timestamp: Date
+})
+
 var Event = new Schema({
   url: String,
   name: String,
@@ -26,7 +32,8 @@ var Event = new Schema({
   duration: Number,
   unit: String,
   emails: [String],
-  intervals: Object
+  intervals: Object,
+  votes: [Vote]
 })
 
 var EventModel = mongoose.model('Event', Event)
@@ -44,7 +51,8 @@ async function createEvent (eventQuery, hashurl) {
     duration: eventQuery.duration,
     unit: eventQuery.unit,
     emails: eventQuery.emails,
-    intervals: eventQuery.intervals
+    intervals: eventQuery.intervals,
+    votes: []
   })
   event.save(function(e){
     if(e){
@@ -62,4 +70,8 @@ async function getEventByURL(URL){
   return document;
 }
 
-module.exports = {createEvent, getEventByURL}
+async function updateEvent(event, vote){
+  return await EventModel.findByIdAndUpdate(event._id, {"$push": {"votes": vote}})
+}
+
+module.exports = {createEvent, getEventByURL, updateEvent}
