@@ -6,7 +6,7 @@ const weather = require('./weather')
 const findIntervals = require('./findIntervals')
 const util = require('./util')
 const hashwords = require('hashwords')
-
+const blocks = require('./blockchain/block')
 
 const hw = hashwords()
 
@@ -54,9 +54,12 @@ app.post('/vote', async function(req, res) {
 })
 
 app.get('/event-details/:url', async function(req, res) {
-  console.log(req.params.url)
   let doc = await db.getEventByURL(req.params.url)
   res.send(doc)
+})
+app.get('/blockchain', async function(req, res) {
+  let data = await db.get()
+  res.send(data);
 })
 // you got this, dont give up u r the bestest
 app.listen(6942, () => console.log('App listening on port 3000.'))
