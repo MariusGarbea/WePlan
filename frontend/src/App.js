@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Route } from 'react-router';
 import './App.css';
 
 import Submit from './Components/Submit';
@@ -6,9 +7,10 @@ import Submit from './Components/Submit';
 class App extends Component {
   render() {
     return (
-      <div>
-        <Submit/>
-      </div>
+      <main>
+        <Route path="/" exact component={Submit} />
+        <Route path="/lol" component={Submit} />
+      </main>
     );
   }
 }

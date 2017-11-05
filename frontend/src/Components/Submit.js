@@ -70,8 +70,8 @@ class Submit extends Component {
     const activitiesOptions = activities.map((data, i) => {
       return (
         <label key={i}>
-          <input type="checkbox" value={data} onChange={this.selectCheckBox} />
-          <p className="inline">{data}</p>
+          <input type="checkbox" value={data.id} onChange={this.selectCheckBox} />
+          <p className="inline">{data.activity}</p>
           <br />
         </label>
       )
