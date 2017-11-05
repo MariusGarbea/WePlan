@@ -75,7 +75,6 @@ async function findForecastIntervals(eventQuery, locationKey){
   else{
     forecasts = await weather.getForecastFor(locationKey, start, end)
   }
-
   if(forecasts.type == "none"){
     return {type: forecasts.type, intervals: [{"start": start, "end": end}]}
   }
