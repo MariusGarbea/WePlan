@@ -58,7 +58,7 @@ app.get('/event-details/:url', async function(req, res) {
   res.send(doc)
 })
 app.get('/blockchain', async function(req, res) {
-  let data = await db.get()
+  let data = await db.getAllBlocks()
   res.send(data);
 })
 // you got this, dont give up u r the bestest

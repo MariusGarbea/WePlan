@@ -4,4 +4,4 @@ const hash = (index, eventID, timestamp, data) => {
   return SHA256(index + eventID + timestamp + data).toString();
 };
 
-export default hash;
+module.exports = {hash};
