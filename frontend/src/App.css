@@ -37,3 +37,7 @@ body {
 .inline {
   display: inline-block;
 }
+
+input, select, textarea {
+  width: 200px;
+}
