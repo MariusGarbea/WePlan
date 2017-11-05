@@ -33,6 +33,7 @@ var Event = new Schema({
   unit: String,
   emails: [String],
   intervals: Object,
+  expiryDate: Date
   votes: [Vote]
 })
 
@@ -52,6 +53,7 @@ async function createEvent (eventQuery, hashurl) {
     unit: eventQuery.unit,
     emails: eventQuery.emails,
     intervals: eventQuery.intervals,
+    expiryDate:
     votes: []
   })
   event.save(function(e){

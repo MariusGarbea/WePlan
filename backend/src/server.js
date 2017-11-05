@@ -61,5 +61,21 @@ app.get('/blockchain', async function(req, res) {
   let data = await db.get()
   res.send(data);
 })
+app.get('/vote/:url/results', async function(req, res){
+  let doc = await db.getEventByURL(req.params.url)
+  votes = doc.votes
+  var results = new Map()
+  for(let i = 0; i < votes.length; i++){
+    if(results.has(votes[i].voteIndex)){
+      let x = results.get(votes[i].voteIndex)
+      x.tally += 1
+      results.set(votes[i].voteIndex, x)
+    }
+    else{
+      results.set(votes[i].voteIndex, {votes[i].vote, tally: 1})
+    }
+  }
+  res.send(results)
+})
 // you got this, dont give up u r the bestest
 app.listen(6942, () => console.log('App listening on port 3000.'))
