@@ -18,7 +18,7 @@ class Submit extends Component {
     this.setState({[event.target.name]: event.target.value});
   }
   handleSubmit = event => {
-    fetch('', {
+    fetch('http://localhost:6942/create-event', {
       method: "POST",
       body: this.state
     }).then(response => {

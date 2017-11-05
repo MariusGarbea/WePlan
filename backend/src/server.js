@@ -15,9 +15,10 @@ app.get('/location-key', async function (req, res) {
 })
 
 app.post('/create-event', (req, res) => {
+  console.log("Creating Event..." + req.query)
   url = hw.random()
-  db.createEvent(req.body, url)
+  //db.createEvent(req.body, url)
   res.send(url)
 })
 // you got this, dont give up u r the bestest
-app.listen(6942, '0.0.0.0', () => console.log('App listening on port 3000.'))
+app.listen(6942, () => console.log('App listening on port 3000.'))
