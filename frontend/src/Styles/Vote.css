@@ -1,11 +1,13 @@
 .box {
   width: 100px;
   height: 100px;
-  background-color: grey;
+  background-color: #DC2FFF;
   margin: 5vw;
+  color: #FFF;
   display: flex;
   justify-content: center;
   align-items: center;
+  cursor: pointer;
 }
 
 .btn {
@@ -16,12 +18,13 @@
   font-size: 20px;
   background-color: #9900cc;
   color: #fff;
+  cursor: pointer;
 }
 
 .center {
   display: flex;
   flex-direction: row;
-  width: 50vw;
+  width: 40vw;
   margin: auto;
   align-items: center;
   flex-wrap: wrap;
