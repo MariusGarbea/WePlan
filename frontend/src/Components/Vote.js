@@ -4,20 +4,27 @@ import '../Styles/Vote.css';
 
 import Header from './Header';
 
-var previous;
+var previous, call;
 
 class Vote extends Component {
   state = {
     result: {intervals: {intervals: []}},
     selection: '',
     selectionID: -1,
-    submit: false
+    submit: false,
+    votingResults: ''
+  }
+  check = () => {
+    fetch(`http://localhost:6942/vote/${this.props.match.params[0]}/results`)
+    .then(response => response.json())
+    .then(votingResults => this.setState({votingResults}))
+    clearInterval(call);
   }
   componentDidMount() {
-    console.log(`http://localhost:6942/event-details/${this.props.match.params[0]}`)
     fetch(`http://localhost:6942/event-details/${this.props.match.params[0]}`)
     .then(response => response.json())
     .then(result => this.setState({result}));
+    call = setInterval(this.check, 120000);
   }
   handleSubmit = () => {
     this.setState({submit: true})
@@ -51,22 +58,21 @@ class Vote extends Component {
     previous = event.target.id;
   }
   render() {
-    console.log(this.state.result)
-      const options = this.state.result.intervals.intervals.map((data, i) => {
-        return (
-          <div className="box" onClick={this.selectTime} key={i} id={i}>
-            {new Date(data.start).toLocaleString()}
-            <br/>
-            {new Date(data.end).toLocaleString()}
-          </div>
-        )
-      })
-
+    const options = this.state.result.intervals.intervals.map((data, i) => {
+      return (
+        <div className="box" onClick={this.selectTime} key={i} id={i}>
+          {new Date(data.start).toLocaleString()}
+          <br/>
+          {new Date(data.end).toLocaleString()}
+        </div>
+      )
+    })
     return (
       <div>
         <Modal isOpen={this.state.submit}>
           <h1>Thank you for your vote! (◕‿◕)</h1>
           <h2>You voted for {this.state.selection}</h2>
+          {this.state.votingResults ? <h2>{this.state.votingResults.text} won with {this.state.votingResults.tally} votes!</h2> : <h2>Wait here for results</h2>}
         </Modal>
         <Header />
         <div className="center">
