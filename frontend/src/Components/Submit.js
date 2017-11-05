@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import Popup from 'react-popup';
+import Modal from 'react-modal';
 import '../App.css';
 
 import Header from './Header';
@@ -16,19 +16,19 @@ class Submit extends Component {
     duration: '',
     unit: '',
     emails: '',
+    result: ''
   }
   handleChange = event => {
     this.setState({[event.target.name]: event.target.value});
   }
   handleSubmit = event => {
-    Popup.alert('shit');
     fetch('http://localhost:6942/create-event', {
       method: "POST",
-      body: this.state.toJSON();
+      body: JSON.stringify(this.state)
     }).then(response => {
       return response.json();
     }).then(result => {
-      Popup.alert('shit');
+      this.setState({result});
     })
   }
   selectCheckBox = event => {
@@ -98,6 +98,9 @@ class Submit extends Component {
     });
     return (
       <div>
+        <Modal isOpen={this.state.result.length !== 0}>
+          <h1>Send this link {this.state.result}</h1>
+        </Modal>
         <Header />
         <div className="flexView">
           <div className="col">
