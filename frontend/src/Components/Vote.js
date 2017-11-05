@@ -18,13 +18,12 @@ class Vote extends Component {
     fetch(`http://localhost:6942/vote/${this.props.match.params[0]}/results`)
     .then(response => response.json())
     .then(votingResults => this.setState({votingResults}))
-    clearInterval(call)
   }
   componentDidMount() {
     fetch(`http://localhost:6942/event-details/${this.props.match.params[0]}`)
     .then(response => response.json())
     .then(result => this.setState({result}));
-    call = setInterval(this.check, 1000);
+    call = setInterval(this.check, 15000);
   }
   handleSubmit = () => {
     this.setState({submit: true})
@@ -103,7 +102,7 @@ class Vote extends Component {
             <XAxis />
             <YAxis />
           </XYPlot>
-          {this.state.votingResults ? <h2> {parsed[0].text} is winning with {parsed[0].tally} votes!</h2> : <h2>Wait here for results</h2>}
+          {this.state.votingResults.length >= 1 ? <h2> {parsed[0].text} is winning with {parsed[0].tally} votes!</h2> : <h2>Wait here for more results</h2>}
         </Modal>
         <Header />
         <div className="center">
