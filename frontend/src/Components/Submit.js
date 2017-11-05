@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
-import logo from '../logo_cropped.png';
 import '../App.css';
+
+import Header from './Header';
+import Modal from './Modal';
 
 class Submit extends Component {
   state = {
@@ -19,7 +21,7 @@ class Submit extends Component {
     this.setState({[event.target.name]: event.target.value});
   }
   handleSubmit = event => {
-    console.log(this.state.activity)
+    console.log(this.state)
     fetch('http://localhost:6942/create-event', {
       method: "POST",
       body: this.state
@@ -96,10 +98,7 @@ class Submit extends Component {
     });
     return (
       <div>
-        <header className="header">
-          <img src={logo} className="logo" alt="logo" />
-          <h1 className="title">WePlan</h1>
-        </header>
+        <Header />
         <div className="flexView">
           <div className="col">
             <label>

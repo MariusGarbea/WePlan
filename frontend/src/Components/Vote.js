@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 
+import Header from './Header';
+
 class Vote extends Component {
   getUpdates = () => {
     fetch(`http://localhost:6942/event-details/${this.props.match.params[0]}`)
@@ -9,6 +11,7 @@ class Vote extends Component {
   render() {
     return (
       <div>
+        <Header />
         {this.props.match.params[0]}
       </div>
     );
