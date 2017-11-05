@@ -87,8 +87,8 @@ class Submit extends Component {
           <img src={logo} className="logo" alt="logo" />
           <h1 className="title">WePlan</h1>
         </header>
-        <div className="col-2">
-          <div>
+        <div className="flexView">
+          <div className="col">
             <label>
               <p>Event name: </p>
               <input type="text" name="name" value={this.state.name} onChange={this.handleChange} />
@@ -126,7 +126,7 @@ class Submit extends Component {
             <br />
             <button className="btn" onClick={this.handleSubmit}> Plan! </button>
           </div>
-          <div className="col-2">
+          <div className="col col-2" >
             {activitiesOptions}
           </div>
         </div>
