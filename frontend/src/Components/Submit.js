@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import Modal from 'react-modal';
+import {Link} from 'react-router-dom';
 import '../Styles/Submit.css';
 
 import Header from './Header';
@@ -103,7 +104,7 @@ class Submit extends Component {
     return (
       <div>
         <Modal isOpen={open}>
-          <h1>Send this link {this.state.result.url}</h1>
+          <h1>Send this link to your friends! <Link to={`${this.state.result.url}`}>{this.state.result.url}</Link></h1>
         </Modal>
         <Header />
         <div className="flexView">

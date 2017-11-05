@@ -58,21 +58,13 @@ class Vote extends Component {
     previous = event.target.id;
   }
   render() {
-    const details = () => {
-      return (
-        <div>
-          <h1>Name: {this.state.result.name}</h1>
-          <h2>Description: {this.state.result.type}</h2>
-          <h3>Location: {this.state.result.venue}</h3>
-        </div>
-      )
-    }
     const options = this.state.result.intervals.intervals.map((data, i) => {
       return (
         <div className="box" onClick={this.selectTime} key={i} id={i}>
           {new Date(data.start).toLocaleString()}
           <br/>
           {new Date(data.end).toLocaleString()}
+          <br/>
         </div>
       )
     })
@@ -85,9 +77,8 @@ class Vote extends Component {
         </Modal>
         <Header />
         <div className="center">
-          {this.state.result ? details() : <p>Loading...</p>}
           {this.state.result ? options : <p>Loading...</p>}
-          <br />
+          <br/>
           <button onClick={this.handleSubmit} className="btn">Vote!</button>
         </div>
       </div>
