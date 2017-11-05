@@ -1,11 +1,11 @@
 const weather = require('./weather')
 const forecastParse = require('./forecast')
 
-var future = new Date()
+/*var future = new Date()
 future.setDate(7)
 findForecastIntervals({"start": new Date(), "end": future, "duration": 1000*60*60*4, "weather": "Sunny"}, "311315").then(function(done, err){
   console.log(done)
-})
+})*/
 
 async function findForecastIntervals(eventQuery, locationKey){
   weatherTypes = {
@@ -67,8 +67,7 @@ async function findForecastIntervals(eventQuery, locationKey){
   end = eventQuery.end
   duration = eventQuery.duration
   requirements = weatherTypes[eventQuery.weather]
-  console.log(requirements)
-
+  //console.log(requirements)
   let forecasts = await weather.getForecastFor(locationKey, start, end)
   if(forecasts.type == "none"){
     return {type: forecasts.type, intervals: [{"start": start, "end": end}]}

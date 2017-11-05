@@ -23,6 +23,10 @@ class Submit extends Component {
   }
   handleSubmit = event => {
     fetch('http://localhost:6942/create-event', {
+      headers: {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json'
+    },
       method: "POST",
       body: JSON.stringify(this.state)
     }).then(response => {
