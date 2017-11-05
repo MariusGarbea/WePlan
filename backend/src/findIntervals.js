@@ -7,5 +7,9 @@ async function findIntervals(eventQuery, locationKey){
   requirements = eventQuery.weather
 
   let forecast = await weather.getForecastFor(locationKey, start, end)
-  for
+  intervals = []
+  date = start
+  while (date <= end){
+    
+  }
 }

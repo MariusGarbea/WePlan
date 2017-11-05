@@ -15,8 +15,6 @@ app.get('/location-key', async function (req, res) {
 })
 
 app.post('/create-event', (req, res) => {
-
-
   url = hw.random()
   db.createEvent(req.body, url)
   res.send(url)
