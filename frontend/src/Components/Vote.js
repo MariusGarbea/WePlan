@@ -26,7 +26,7 @@ class Vote extends Component {
     if(previous) {
       document.getElementById(previous).style.backgroundColor = "#DC2FFF";
     }
-    this.setState({selection: event.target.innerHTML});
+    this.setState({selection: event.target.innerHTML.replace("<br>", " - ")});
     document.getElementById(event.target.id).style.backgroundColor = "#DC2685";
     previous = event.target.id;
   }
@@ -35,7 +35,8 @@ class Vote extends Component {
       const options = this.state.result.intervals.intervals.map((data, i) => {
         return (
           <div className="box" onClick={this.selectTime} key={i} id={i}>
-            {new Date(data.start).toLocaleString()}<br></br>
+            {new Date(data.start).toLocaleString()}
+            <br/>
             {new Date(data.end).toLocaleString()}
           </div>
         )

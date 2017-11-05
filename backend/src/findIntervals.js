@@ -7,7 +7,7 @@ findForecastIntervals({"start": new Date(), "end": future, "duration": 1000*60*6
   console.log(done)
 })*/
 
-async function findForecastIntervals(eventQuery, locationKey){
+async function findForecastIntervals(eventQuery, locationKey, noLocation){
   weatherTypes = {
      'Sunny':[
         'Sunny',
@@ -68,7 +68,13 @@ async function findForecastIntervals(eventQuery, locationKey){
   duration = eventQuery.duration
   requirements = weatherTypes[eventQuery.weather]
   //console.log(requirements)
-  let forecasts = await weather.getForecastFor(locationKey, start, end)
+  let forecasts
+  if(noLocation){
+    forecasts = []
+  }
+  else{
+    forecasts = await weather.getForecastFor(locationKey, start, end)
+  }
   if(forecasts.type == "none"){
     return {type: forecasts.type, intervals: [{"start": start, "end": end}]}
   }

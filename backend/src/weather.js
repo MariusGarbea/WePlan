@@ -15,11 +15,17 @@ async function callAPI(route, params){
   return res
 }
 
-async function getLocationKey (lat, lon) {
-  return await callAPI(
-    '/locations/v1/cities/geoposition/search',
-    {'q': lat + '%2C' + lon}
+async function getLocationKey (address) {
+  let location = await callAPI(
+    '/locations/v1/cities/search',
+    {'q': address}
   )
+  if(location){
+    return location[0].Key
+  }
+  else{
+    return -1
+  }
 }
 
 function convertToParams (dictOfParams) {

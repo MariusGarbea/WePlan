@@ -17,24 +17,20 @@ app.use(bodyParser.urlencoded({
 }))
 app.use(bodyParser.json())
 
-app.get('/location-key', async function (req, res) {
-  const lat = req.query.lat
-  const long = req.query.long
-  let results = await weather.getLocation(lat, long)
-  console.log(results)
-  res.send('Good')
-})
-
 app.post('/create-event', async function (req, res) {
   console.log("Creating Event...")
   console.log(req.body)
-  locationCode = "311351"//weather.getLocation()
+  locationCode = await weather.getLocation(req.body.venue)
+  let noLocation = false
+  if(locationCode == -1){
+    useLocation = true
+  }
   let intervals = await findIntervals.findForecastIntervals({
     "start": new Date(req.body.startDate),
     "end": new Date(req.body.endDate),
     "duration": util.convertDuration(req.body.duration, req.body.unit),
     "weather": req.body.weather
-  }, locationCode)
+  }, locationCode, noLocation)
   url = hw.random().join("")
   url = "http://localhost:3000/Vote/"+url
   let myEvent = req.body
