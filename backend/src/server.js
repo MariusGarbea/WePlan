@@ -45,7 +45,7 @@ app.post('/vote', async function(req, res) {
   }
   console.log(req.body)
   let document = await db.getEventByURL(req.body.eventID)
-  await db.updateEvent(document, {
+  document = await db.updateEvent(document, {
     timestamp: new Date(),
     vote: req.body.selection,
     voteIndex: req.body.selectionID
@@ -62,8 +62,8 @@ app.get('/blockchain', async function(req, res) {
   res.send(data);
 })
 app.get('/vote/:url/results', async function(req, res){
-  let doc = await db.getEventByURL(req.params.url)
-  votes = doc.votes
+  let doc = await db.getVotesByEventURL(req.params.url)
+  var votes = doc.votes
   var results = new Map()
   for(let i = 0; i < votes.length; i++){
     if(results.has(votes[i].voteIndex)){
@@ -72,10 +72,16 @@ app.get('/vote/:url/results', async function(req, res){
       results.set(votes[i].voteIndex, x)
     }
     else{
-      results.set(votes[i].voteIndex, {votes[i].vote, tally: 1})
+      results.set(votes[i].voteIndex, {"text": votes[i].vote, "tally": 1})
     }
   }
-  res.send(results)
+  var data = []
+  console.log(results.keys())
+  for (let afa of results.keys()){
+    console.log(results.get(afa))
+    data.push(results.get(afa))
+  }
+  res.send(data)
 })
 // you got this, dont give up u r the bestest
-app.listen(6942, () => console.log('App listening on port 3000.'))
+app.listen(6942, () => console.log('App listening on port 6942.'))

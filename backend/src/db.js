@@ -33,7 +33,7 @@ var Event = new Schema({
   unit: String,
   emails: [String],
   intervals: Object,
-  expiryDate: Date
+  expiryDate: Date,
   votes: [Vote]
 })
 
@@ -73,7 +73,7 @@ async function createEvent (eventQuery, hashurl) {
     unit: eventQuery.unit,
     emails: eventQuery.emails,
     intervals: eventQuery.intervals,
-    expiryDate:
+    expiryDate: new Date(new Date().getTime() + 2 * 60 * 1000),
     votes: []
   })
   event.save(function(e){
@@ -92,8 +92,14 @@ async function getEventByURL(URL){
   return document;
 }
 
+async function getVotesByEventURL(URL){
+  let baseURL = "http://localhost:3000/Vote/"+URL
+  let document = await EventModel.findOne({'url' : baseURL}, 'votes')
+  return document;
+}
+
 async function updateEvent(event, vote){
   return await EventModel.findByIdAndUpdate(event._id, {"$push": {"votes": vote}})
 }
 
-module.exports = {createEvent, getEventByURL, updateEvent, getAllBlocks, pushBlock}
+module.exports = {createEvent, getEventByURL, updateEvent, getAllBlocks, pushBlock, getVotesByEventURL}
