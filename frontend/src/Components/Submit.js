@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
+import Popup from 'react-popup';
 import '../App.css';
 
 import Header from './Header';
-import Modal from './Modal';
 
 class Submit extends Component {
   state = {
@@ -15,20 +15,20 @@ class Submit extends Component {
     endDate: '',
     duration: '',
     unit: '',
-    emails: ''
+    emails: '',
   }
   handleChange = event => {
     this.setState({[event.target.name]: event.target.value});
   }
   handleSubmit = event => {
-    console.log(this.state)
+    Popup.alert('shit');
     fetch('http://localhost:6942/create-event', {
       method: "POST",
-      body: this.state
+      body: this.state.toJSON();
     }).then(response => {
       return response.json();
     }).then(result => {
-      alert(`Give this link to your friends: ${result}`);
+      Popup.alert('shit');
     })
   }
   selectCheckBox = event => {
