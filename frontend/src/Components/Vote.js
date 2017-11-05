@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import Modal from 'react-modal';
 import '../Styles/Vote.css';
-
+import {XYPlot, XAxis, YAxis, HorizontalGridLines, VerticalBarSeries} from 'react-vis';
 import Header from './Header';
 
 var previous, call;
@@ -18,13 +18,13 @@ class Vote extends Component {
     fetch(`http://localhost:6942/vote/${this.props.match.params[0]}/results`)
     .then(response => response.json())
     .then(votingResults => this.setState({votingResults}))
-    clearInterval(call);
+    clearInterval(call)
   }
   componentDidMount() {
     fetch(`http://localhost:6942/event-details/${this.props.match.params[0]}`)
     .then(response => response.json())
     .then(result => this.setState({result}));
-    call = setInterval(this.check, 120);
+    call = setInterval(this.check, 1000);
   }
   handleSubmit = () => {
     this.setState({submit: true})
@@ -73,16 +73,37 @@ class Vote extends Component {
           {new Date(data.start).toLocaleString()}
           <br/>
           {new Date(data.end).toLocaleString()}
-          <br/>
         </div>
       )
     })
+    var parsed = [];
+    var nonsorted = [];
+    for(let i = 0; i < this.state.votingResults.length; i++) {
+      parsed.push(this.state.votingResults[i])
+      nonsorted.push(this.state.votingResults[i])
+    }
+    console.log(parsed.length)
+    parsed.sort(function(a, b){
+      return b.tally - a.tally
+    });
+    console.log(parsed);
     return (
       <div>
         <Modal isOpen={this.state.submit}>
           <h1>Thank you for your vote! (◕‿◕)</h1>
           <h2>You voted for {this.state.selection}</h2>
-          {this.state.votingResults ? <h2>{this.state.votingResults.text} won with {this.state.votingResults.tally} votes!</h2> : <h2>Wait here for results</h2>}
+          <XYPlot
+            width={700}
+            height={600}>
+            <HorizontalGridLines />
+            <VerticalBarSeries
+              data={nonsorted.map((data, i) => {
+                return {x: (new Date(data.text.split(" - ")[0]).getTime() - new Date().getTime())/1000/60/60/24, y: data.tally}
+              })}/>
+            <XAxis />
+            <YAxis />
+          </XYPlot>
+          {this.state.votingResults ? <h2> {parsed[0].text} is winning with {parsed[0].tally} votes!</h2> : <h2>Wait here for results</h2>}
         </Modal>
         <Header />
         <div className="center">

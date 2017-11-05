@@ -100,11 +100,14 @@ class Submit extends Component {
         <option value={data} key={i}>{data}</option>
       )
     });
+    if(this.state.result.url) {
+      this.state.result.url = this.state.result.url.slice(21);
+    }
     let open = this.state.result.url && this.state.result.url.length !== 0;
     return (
       <div>
         <Modal isOpen={open}>
-          <h1>Send this link to your friends! <Link to={`${this.state.result.url}`}>{this.state.result.url}</Link></h1>
+          <h1>Send this link to your friends! <Link to={this.state.result.url}>{this.state.result.url}</Link></h1>
         </Modal>
         <Header />
         <div className="flexView">
